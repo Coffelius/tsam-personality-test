@@ -1835,7 +1835,7 @@
          * @param {string} characterKey - The character key
          * @param {number} percentage - Match percentage
          */
-        function generateAIExplanation(characterKey, percentage) {
+        async function generateAIExplanation(characterKey, percentage) {
             const contentDiv = document.getElementById('aiExplanationContent');
             const character = characters[characterKey];
 
@@ -1850,12 +1850,41 @@
                 return;
             }
 
-            // Simulate AI processing delay
-            setTimeout(() => {
+            // Prepare answers for API
+            const answersData = answers.map(a => a.selectedOption || a);
+
+            try {
+                // Call Workers AI API
+                const response = await fetch('/explain', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        character: characterKey,
+                        answers: answersData
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const explanation = data.explanation;
+                    saveExplanation(explanation);
+                    displayExplanation(explanation);
+                } else {
+                    // Fall back to template on API error
+                    console.warn('API error, using template');
+                    const explanation = generateExplanationText(character, percentage);
+                    saveExplanation(explanation);
+                    displayExplanation(explanation);
+                }
+            } catch (error) {
+                // Fall back to template on network error
+                console.warn('Network error, using template:', error);
                 const explanation = generateExplanationText(character, percentage);
                 saveExplanation(explanation);
                 displayExplanation(explanation);
-            }, 1500 + Math.random() * 1000); // 1.5-2.5 second delay
+            }
         }
 
         /**
@@ -2087,7 +2116,7 @@
         /**
          * Send a chat message
          */
-        function sendChatMessage() {
+        async function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
 
@@ -2105,13 +2134,46 @@
             // Show typing indicator
             showTypingIndicator();
 
-            // Generate response after delay
-            setTimeout(() => {
+            // Get current character and chat history
+            const results = getResults();
+            const character = results ? results.character : null;
+            const history = getChatHistory();
+
+            try {
+                // Call Workers AI chat API
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        history: history,
+                        character: character
+                    })
+                });
+
                 removeTypingIndicator();
-                const response = generateChatResponse(message);
-                addMessageToChat('assistant', response);
-                addChatMessage('assistant', response);
-            }, 1000 + Math.random() * 1000);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const aiResponse = data.response;
+                    addMessageToChat('assistant', aiResponse);
+                    addChatMessage('assistant', aiResponse);
+                } else {
+                    // Fall back to template on API error
+                    const fallbackResponse = generateChatResponse(message);
+                    addMessageToChat('assistant', fallbackResponse);
+                    addChatMessage('assistant', fallbackResponse);
+                }
+            } catch (error) {
+                // Fall back to template on network error
+                console.warn('Chat API error, using template:', error);
+                removeTypingIndicator();
+                const fallbackResponse = generateChatResponse(message);
+                addMessageToChat('assistant', fallbackResponse);
+                addChatMessage('assistant', fallbackResponse);
+            }
         }
 
         /**
