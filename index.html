@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAMS Personality Test - Which Character Are You?</title>
+    <title>TSAMS Personality Test - Which Character Are You?</title>
     <style>
         * {
             margin: 0;
@@ -877,7 +877,7 @@
 
         <!-- Welcome Screen -->
         <div class="welcome-screen" id="welcomeScreen">
-            <h1>Which SAMS Character Are You?</h1>
+            <h1>Which TSAMS Character Are You?</h1>
             <p class="subtitle">Discover your inner animatronic from The Sun and Moon Show!</p>
 
             <!-- Name Input Section -->
@@ -916,7 +916,7 @@
                 <div><span>➖</span><small>Neg Moon</small></div>
                 <div><span>➕</span><small>Pos Moon</small></div>
             </div>
-            <p>Answer 20 fun questions about your personality, and we'll match you with the SAMS character that best represents your unique traits! From the cheerful Sun to the mysterious Old Moon, the nurturing Earth to the mischievous Jack-O-Moon — discover your true SAMS identity!</p>
+            <p>Answer 20 fun questions about your personality, and we'll match you with the TSAMS character that best represents your unique traits! From the cheerful Sun to the mysterious Old Moon, the nurturing Earth to the mischievous Jack-O-Moon — discover your true TSAMS identity!</p>
             <div id="welcomeButtons">
                 <button class="btn" onclick="startQuiz()">Start Quiz ☀️</button>
             </div>
@@ -986,7 +986,7 @@
             <div class="chat-header-info">
                 <div class="chat-avatar">☀️🌙</div>
                 <div>
-                    <div class="chat-title">SAMS Chat</div>
+                    <div class="chat-title">TSAMS Chat</div>
                     <div class="chat-subtitle">Ask us anything!</div>
                 </div>
             </div>
@@ -1348,11 +1348,11 @@
         // ============================================
 
         const STORAGE_KEYS = {
-            USERNAME: 'sams_username',
-            QUIZ_STATE: 'sams_quiz_state',
-            RESULTS: 'sams_results',
-            EXPLANATION: 'sams_explanation',
-            CHAT_HISTORY: 'sams_chat_history'
+            USERNAME: 'tsams_username',
+            QUIZ_STATE: 'tsams_quiz_state',
+            RESULTS: 'tsams_results',
+            EXPLANATION: 'tsams_explanation',
+            CHAT_HISTORY: 'tsams_chat_history'
         };
 
         /**
@@ -1742,7 +1742,7 @@
             updateChatBadge();
 
             // Log stored data for debugging (optional)
-            console.log('SAMS Quiz - Stored Data:', getAllStoredData());
+            console.log('TSAMS Quiz - Stored Data:', getAllStoredData());
         });
 
         // ============================================
@@ -1957,10 +1957,10 @@
             const character = characters[savedResults.character];
             const percentage = Math.round((Object.values(savedResults.scores).reduce((a, b) => Math.max(a, b), 0) / (questions.length * 3)) * 100);
 
-            const shareText = `🌟 ${name} got ${character.name} (${character.title}) on the SAMS Personality Test!\n${percentage}% match! ☀️🌙\n\nWhich SAMS character are YOU?`;
+            const shareText = `🌟 ${name} got ${character.name} (${character.title}) on the TSAMS Personality Test!\n${percentage}% match! ☀️🌙\n\nWhich TSAMS character are YOU?`;
 
             const shareData = {
-                title: 'My SAMS Personality Result',
+                title: 'My TSAMS Personality Result',
                 text: shareText,
                 url: window.location.href
             };
@@ -2331,7 +2331,7 @@
                     const character = characters[results.character];
                     return `Your result is ${character.name}! ${character.emoji} ${character.title}. Pretty cool, right${name ? ` ${name}` : ''}? Want to know more about why you matched with them?`;
                 }
-                return `The quiz has 20 questions that help determine which SAMS character you're most like! Each answer adds points to different characters. At the end, we show your top match! Want to try it? ☀️`;
+                return `The quiz has 20 questions that help determine which TSAMS character you're most like! Each answer adds points to different characters. At the end, we show your top match! Want to try it? ☀️`;
             }
 
             // Result explanation
@@ -2345,7 +2345,7 @@
 
             // Personality questions
             if (msg.includes('personality') || msg.includes('character')) {
-                return `There are 16 different SAMS characters you could match with! Each has unique personality traits - from cheerful Sun to mysterious Moon, from innocent Lunar to complex Eclipse. Which one are YOU hoping for? 🤔`;
+                return `There are 16 different TSAMS characters you could match with! Each has unique personality traits - from cheerful Sun to mysterious Moon, from innocent Lunar to complex Eclipse. Which one are YOU hoping for? 🤔`;
             }
 
             // Compliments
@@ -2355,7 +2355,7 @@
 
             // Help
             if (msg.includes('help') || msg.includes('what can i ask')) {
-                return `You can ask me about: 🌟 Any of the SAMS characters (Sun, Moon, Lunar, Eclipse, etc.)\n🌟 How the quiz works\n🌟 Your quiz results\n🌟 Personality questions\n🌟 Or just say hi! What would you like to know?`;
+                return `You can ask me about: 🌟 Any of the TSAMS characters (Sun, Moon, Lunar, Eclipse, etc.)\n🌟 How the quiz works\n🌟 Your quiz results\n🌟 Personality questions\n🌟 Or just say hi! What would you like to know?`;
             }
 
             // Goodbye
@@ -2377,7 +2377,7 @@
         }
 
         // Expose helper functions globally for potential external use
-        window.SAMSQuiz = {
+        window.TSAMSQuiz = {
             saveToLocalStorage,
             getFromLocalStorage,
             saveUsername,

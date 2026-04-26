@@ -1,9 +1,9 @@
-name = "sams-personality-test"
+name = "tsams-personality-test"
 compatibility_date = "2024-01-01"
 pages_build_output_dir = "."
 
 # Workers AI binding
-# To enable: Go to Cloudflare Dashboard > Pages > sams-personality-test > Settings > Functions > Bindings
+# To enable: Go to Cloudflare Dashboard > Pages > tsams-personality-test > Settings > Functions > Bindings
 # Add binding named "AI" with type "Workers AI"
 
 [ai]

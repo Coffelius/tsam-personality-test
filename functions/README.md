@@ -1,4 +1,4 @@
-# SAMS Personality Test - Cloudflare Workers API
+# TSAMS Personality Test - Cloudflare Workers API
 
 Two serverless API endpoints powered by Cloudflare Workers AI with Llama 3.1 8B Instruct.
 
@@ -106,7 +106,7 @@ npm install -g wrangler
 wrangler login
 
 # Deploy
-cd /path/to/sams-personality-test
+cd /path/to/tsams-personality-test
 wrangler pages deploy .
 ```
 
@@ -166,7 +166,7 @@ curl -X POST http://localhost:8788/api/chat \
 
 ## Character Reference
 
-All 16 SAMS characters with their archetypes:
+All 16 TSAMS characters with their archetypes:
 
 | Character | Title | Emoji |
 |-----------|-------|-------|

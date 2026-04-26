@@ -116,7 +116,7 @@ function getCachedCharacterPrompt(character) {
 Title: ${profile.title}
 Description: ${profile.description}
 
-This is a SAMS (Sun and Moon System) personality type based on the celestial-themed characters from the beloved universe.`;
+This is a TSAMS (Sun and Moon System) personality type based on the celestial-themed characters from the beloved universe.`;
 }
 
 /**
@@ -156,7 +156,7 @@ Keep it concise and conversational.`;
       messages: [
         {
           role: 'system',
-          content: `You are a warm, insightful personality guide for the SAMS personality test. You provide thoughtful, encouraging explanations that help people understand themselves better. ${cachedPrompt}`
+          content: `You are a warm, insightful personality guide for the TSAMS personality test. You provide thoughtful, encouraging explanations that help people understand themselves better. ${cachedPrompt}`
         },
         {
           role: 'user',
@@ -211,7 +211,7 @@ export async function onRequest(context) {
     if (request.method === 'GET') {
       return new Response(
         JSON.stringify({
-          service: 'SAMS Personality Explanation API',
+          service: 'TSAMS Personality Explanation API',
           version: '1.0.0',
           aiAvailable: !!env.AI,
           characters: Object.keys(CHARACTER_PROFILES)

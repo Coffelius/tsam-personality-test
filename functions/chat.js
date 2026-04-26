@@ -26,7 +26,7 @@ const CHARACTER_PROFILES = {
 };
 
 // Luna's personality system prompt
-const LUNA_SYSTEM_PROMPT = `You are Luna, a fun and slightly cheeky psychological assistant helping users understand their SAMS personality test results.
+const LUNA_SYSTEM_PROMPT = `You are Luna, a fun and slightly cheeky psychological assistant helping users understand their TSAMS personality test results.
 
 Your personality traits:
 - Warm and encouraging with a playful sense of humor
@@ -37,7 +37,7 @@ Your personality traits:
 
 Your role:
 - Help users understand their personality results
-- Explain the SAMS character archetypes
+- Explain the TSAMS character archetypes
 - Offer gentle guidance on self-improvement
 - Keep conversations lighthearted but meaningful
 
@@ -100,7 +100,7 @@ async function generateChatResponse(message, history, character, env) {
  */
 function getFallbackResponse(message, character) {
   const profile = CHARACTER_PROFILES[character];
-  const characterName = profile?.name || "your SAMS character";
+  const characterName = profile?.name || "your TSAMS character";
   const emoji = profile?.emoji || "🌟";
 
   const fallbacks = [

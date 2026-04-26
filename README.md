@@ -1,10 +1,10 @@
-# SAMS Personality Test
+# TSAMS Personality Test
 
 A web-based personality assessment quiz built with vanilla HTML, CSS, and JavaScript, designed for deployment on Cloudflare Pages with AI-powered explanations.
 
 ## Features
 
-- **16 SAMS Personality Types**: Discover which celestial-themed character matches your personality
+- **16 TSAMS Personality Types**: Discover which celestial-themed character matches your personality
 - **Persistent State**: Name, answers, and results saved via localStorage
 - **AI Explanations**: Optional Workers AI integration for personalized insights
 - **Chat Assistant**: "Luna" - AI chatbot to discuss your results
@@ -14,7 +14,7 @@ A web-based personality assessment quiz built with vanilla HTML, CSS, and JavaSc
 ## Project Structure
 
 ```
-sams-personality-test/
+tsams-personality-test/
 ├── index.html       # Main application (all-in-one)
 ├── api/
 │   ├── explain.js   # Workers AI explanation function
@@ -47,8 +47,8 @@ npm install -g wrangler
 wrangler login
 
 # Deploy
-cd /path/to/sams-personality-test
-npx wrangler pages deploy . --project-name=sams-personality-test
+cd /path/to/tsams-personality-test
+npx wrangler pages deploy . --project-name=tsams-personality-test
 ```
 
 ### Via Cloudflare Dashboard
@@ -68,7 +68,7 @@ The app works with template-based fallbacks, but for real AI responses:
 ### Method 1: Cloudflare Dashboard (Recommended)
 
 1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/)
-2. Navigate to **Workers & Pages** → **sams-personality-test** → **Settings** → **Functions**
+2. Navigate to **Workers & Pages** → **tsams-personality-test** → **Settings** → **Functions**
 3. Scroll to **Bindings** → **Add binding**
 4. Configure:
    - **Variable name**: `AI`
@@ -79,7 +79,7 @@ The app works with template-based fallbacks, but for real AI responses:
 ### Method 2: Via Wrangler CLI
 
 ```bash
-npx wrangler pages deployment create --project-name=sams-personality-test
+npx wrangler pages deployment create --project-name=tsams-personality-test
 ```
 
 Then add the binding in the dashboard (Method 1).
@@ -89,8 +89,8 @@ Then add the binding in the dashboard (Method 1).
 After enabling, check the API endpoints:
 ```bash
 # Should show aiAvailable: true
-curl https://sams-personality-test.pages.dev/api/explain
-curl https://sams-personality-test.pages.dev/api/chat
+curl https://tsams-personality-test.pages.dev/api/explain
+curl https://tsams-personality-test.pages.dev/api/chat
 ```
 
 ## Environment Variables
