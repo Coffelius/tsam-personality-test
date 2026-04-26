@@ -1,93 +1,115 @@
-# Sam's Personality Test
+# SAMS Personality Test
 
-A web-based personality assessment quiz built with vanilla HTML, CSS, and JavaScript, designed for deployment on Cloudflare Pages.
+A web-based personality assessment quiz built with vanilla HTML, CSS, and JavaScript, designed for deployment on Cloudflare Pages with AI-powered explanations.
 
-## Project Description
+## Features
 
-This is a simple, interactive personality test that presents users with a series of questions and calculates their personality type based on their answers. The application runs entirely in the browser with no backend dependencies.
-
-## Local Development
-
-Since this is a static site with client-side JavaScript, you can serve it locally using any static file server:
-
-```bash
-# Using Python 3
-python -m http.server 8000
-
-# Using Node.js (npx)
-npx serve .
-
-# Using PHP
-php -S localhost:8000
-```
-
-Then open `http://localhost:8000` in your browser.
-
-## Deployment
-
-### Deploy via Cloudflare Pages (Git Integration)
-
-1. Push your code to a Git repository (GitHub, GitLab, or Bitbucket)
-2. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com/)
-3. Go to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**
-4. Select your repository
-5. Configure build settings:
-   - **Build output directory**: `.`
-   - **Root directory**: `examples/sams-personality-test` (if in a monorepo)
-   - No build command needed (static files)
-6. Click **Save and Deploy**
-
-### Deploy via Wrangler CLI
-
-First, install Wrangler globally:
-```bash
-npm install -g wrangler
-```
-
-Then authenticate with Cloudflare:
-```bash
-wrangler login
-```
-
-Deploy your site:
-```bash
-cd /Users/me/Projects/ruflo/examples/sams-personality-test
-wrangler pages deploy .
-```
-
-## Environment Variables
-
-For deployment via Wrangler CLI, you may need to configure:
-
-| Variable | Description | How to Get |
-|----------|-------------|------------|
-| `CLOUDFLARE_API_TOKEN` | API token for authentication | Create at [Cloudflare Dashboard](https://dash.cloudflare.com/profile/api-tokens) with **Cloudflare Pages:Edit** permissions |
-| `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account ID | Found in the [Cloudflare Dashboard](https://dash.cloudflare.com) URL or in the **Workers & Pages** overview page |
-
-### Setting Environment Variables
-
-```bash
-# Via command line
-export CLOUDFLARE_API_TOKEN=your_token_here
-export CLOUDFLARE_ACCOUNT_ID=your_account_id_here
-
-# Or add to your shell profile (~/.zshrc, ~/.bashrc, etc.)
-echo 'export CLOUDFLARE_API_TOKEN=your_token_here' >> ~/.zshrc
-echo 'export CLOUDFLARE_ACCOUNT_ID=your_account_id_here' >> ~/.zshrc
-source ~/.zshrc
-```
+- **16 SAMS Personality Types**: Discover which celestial-themed character matches your personality
+- **Persistent State**: Name, answers, and results saved via localStorage
+- **AI Explanations**: Optional Workers AI integration for personalized insights
+- **Chat Assistant**: "Luna" - AI chatbot to discuss your results
+- **Social Sharing**: Share results via Web Share API
+- **Reset/Retake**: Clear data and retake the quiz anytime
 
 ## Project Structure
 
 ```
 sams-personality-test/
-├── index.html       # Main HTML file
-├── style.css        # Stylesheets
-├── script.js        # Application logic
+├── index.html       # Main application (all-in-one)
+├── api/
+│   ├── explain.js   # Workers AI explanation function
+│   ├── chat.js      # Luna chat assistant function
+│   └── README.md    # API documentation
 ├── wrangler.toml    # Cloudflare Pages configuration
 ├── .gitignore       # Git ignore rules
 └── README.md        # This file
 ```
+
+## Local Development
+
+```bash
+# Using Python 3
+python -m http.server 8000
+
+# Using Node.js
+npx serve .
+
+# Then open http://localhost:8000
+```
+
+## Deployment
+
+### Quick Deploy via Wrangler CLI
+
+```bash
+# Install and authenticate
+npm install -g wrangler
+wrangler login
+
+# Deploy
+cd /path/to/sams-personality-test
+npx wrangler pages deploy . --project-name=sams-personality-test
+```
+
+### Via Cloudflare Dashboard
+
+1. Push code to GitHub
+2. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**
+3. Select your repository
+4. Build settings:
+   - **Build output directory**: `.`
+   - No build command needed
+5. Click **Save and Deploy**
+
+## Enabling Workers AI (Optional)
+
+The app works with template-based fallbacks, but for real AI responses:
+
+### Method 1: Cloudflare Dashboard (Recommended)
+
+1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/)
+2. Navigate to **Workers & Pages** → **sams-personality-test** → **Settings** → **Functions**
+3. Scroll to **Bindings** → **Add binding**
+4. Configure:
+   - **Variable name**: `AI`
+   - **Binding type**: `Workers AI`
+   - **Model**: (leave blank for access to all)
+5. Click **Save** and **Deploy**
+
+### Method 2: Via Wrangler CLI
+
+```bash
+npx wrangler pages deployment create --project-name=sams-personality-test
+```
+
+Then add the binding in the dashboard (Method 1).
+
+### Verify AI is Working
+
+After enabling, check the API endpoints:
+```bash
+# Should show aiAvailable: true
+curl https://sams-personality-test.pages.dev/api/explain
+curl https://sams-personality-test.pages.dev/api/chat
+```
+
+## Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `CLOUDFLARE_API_TOKEN` | API token for deployment | Yes (for CLI deploy) |
+| `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account ID | Yes (for CLI deploy) |
+
+Create an API token at [Cloudflare Dashboard](https://dash.cloudflare.com/profile/api-tokens) with **Cloudflare Pages:Edit** permissions.
+
+## AI Pricing (Workers AI)
+
+| Resource | Cost |
+|----------|------|
+| Llama 3.1 8B Instruct | 25,608 neurons/M input, 75,147 neurons/M output |
+| Free tier | 10,000 neurons/day |
+
+Each explanation uses ~500-1,000 neurons. Free tier covers ~10-20 explanations daily.
 
 ## License
 
